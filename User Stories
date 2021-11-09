@@ -1,7 +1,7 @@
 Goal: You have been contracted to build a prototype for a person search for a top-secret government project. You have been given access to an array of objects representing individuals. The prototype should just use prompt() and alert() for the User Interface (UI). Although this isn’t typical in production, you may use only two files for this project, an HTML file and a JS file for the application.
 Technologies: JavaScript
 User Stories:
-(5 points): As a developer, I want to make at least 15 consistent commits with good, descriptive messages.
+## (5 points): As a developer, I want to make at least 15 consistent commits with good, descriptive messages.
 (5 points): As a developer, I want to run validation on any user input, ensuring that a user is re-prompted when they provide invalid input.
 (10 points): As a user, I want to be able to search for someone based on a single criterion - You should be able to find and return a list of people who match the search
 (15 points): As a user, I want to be able to search for someone based on multiple traits (up to a maximum of five criteria at once).

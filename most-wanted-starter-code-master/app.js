@@ -16,8 +16,9 @@ function app(people){
       break;
     case 'no':
       // TODO: search by traits
+      searchResults = searchByTrait(people);
       break;
-      default:
+      default: 
     app(people); // restart app
       break;
   }
@@ -88,6 +89,29 @@ function searchByEyeColor(people){
 }
 
 //TODO: add other trait filter functions here.
+function searchByTrait(people){
+  let userInput = promptFor("Would you like to search by eye color, gender, height or weight ", autoValid).toLowerCase();
+  switch(userInput) {
+    case "eye color":
+      // TODO: get person's eye color
+      console.log(`${userInput}`)
+      break;
+      case "gender":
+      // TODO: get person's gender
+      console.log(`${userInput}`)
+      break;
+      case "height":
+      // TODO: get person's height
+      console.log(`${userInput}`)
+      break;
+      case "weight":
+      // TODO: get person's weight
+      console.log(`${userInput}`)
+      break;
+      default:
+      searchByTrait(people); // ask again
+    }
+}
 
 
 
