@@ -17,14 +17,12 @@ function app(people){
       break;
     case 'no':
       searchResults = searchByTrait(people);
+      // maybe function to ask to end
       break;
       default: 
     app(people); // restart app
       break;
   }
-  
-  // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
-  mainMenu(searchResults, people);
 }
 
 // Menu function to call once you find who you are looking for
@@ -37,17 +35,17 @@ function mainMenu(person, people){
     return app(people); // restart
   }
 
-  let displayOption = promptFor("Found " + JSON.stringify(person.firstName) + " " + JSON.stringify(person.lastName) + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'", autoValid);
+  let displayOption = promptFor("Found " + person[0].firstName + " " + person[0].lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'", autoValid);
 
   switch(displayOption){
     case "info":
-    // TODO: get person's info
+      displayPerson(person)
     break;
     case "family":
-    // TODO: get person's family
+      displayFamily(person, people)
     break;
     case "descendants":
-    // TODO: get person's descendants
+      displayDescendants(person)
     break;
     case "restart":
     app(people); // restart
@@ -65,24 +63,24 @@ function searchByTrait(people){
   switch(userInput) {
     case "eye color":
       resultTrait = searchByEyeColor(people);
-      displayPeople(resultTrait)
       onePerson(resultTrait, people)
+      break;
       case "gender":
       resultTrait = searchByGender(people)
-      displayPeople(resultTrait)
       onePerson(resultTrait, people)
+      break;
       case "height":
       resultTrait = searchByHeight(people)
-      displayPeople(resultTrait)
       onePerson(resultTrait, people)
+      break;
       case "weight":
       resultTrait = searchByWeight(people)
-      displayPeople(resultTrait)
       onePerson(resultTrait, people)
+      break;
       case "occupation":
       resultTrait = searchByOccupation(people)
-      displayPeople(resultTrait)
       onePerson(resultTrait, people)
+      break;
       default:
       searchByTrait(people); // ask again
     }
@@ -90,23 +88,9 @@ function searchByTrait(people){
 
 function onePerson(searchResults, people) {
   if (searchResults.length == 1) {
-    alert(`This is the result of your query: `)
-    alert(displayPerson(searchResults));
-    let userInputMoreDetails = promptFor(`Would you like to see family details on ${searchResults.firstName}`, yesNo).toLowerCase();
-    switch(userInputMoreDetails){
-      case 'yes':
-        mainMenu(searchResults, people)
-        break;
-      case 'no':
-        alert("Ok, restarting the app")
-        app(people); // restart app
-        break;
-      default:
-        alert("Invalid input")
-        onePerson(searchResults)
-    }
+        mainMenu(searchResults, people)   
   } else { 
-      alert("Your search includes multiple people,redirecting to filter by traits");
+      alert("Your search includes multiple people, redirecting to filter by traits");
       searchByTrait(searchResults)
     }
   }
@@ -222,17 +206,56 @@ function displayPeople(people){
 }
 
 function displayPerson(person){
-  let personInfo = "First Name: " + person["firstName"] + "\n";
-  personInfo += "Last Name: " + person.lastName + "\n";
-  personInfo += "Eye color: " + person.eyeColor + "\n";
-  personInfo += "Height: " + person.height + "\n";
-  personInfo += "Gender: " + person.gender + "\n";
-  personInfo += "Weight: " + person.weight + "\n";
-  personInfo += "Occupation: " + person.occupation + "\n";
-  personInfo += "Date Of Birth: " + person.dob + "\n";
-  alert(JSON.stringify(personInfo));
+  let firstName = "First Name: " + person[0].firstName; 
+  let lastName =  "Last Name: " + person[0].lastName;
+  let gender = "Gender: " + person[0].gender;
+  let dob = "Date Of Birth: " + person[0].dob;
+  let height = "Height: " + person[0].height;
+  let weight = "Weight: " + person[0].weight;
+  let eyeColor = "Eye color: " + person[0].eyeColor;
+  let occupation = "Occupation: " + person[0].occupation;
+  alert(firstName+'\n'+lastName+'\n'+gender+'\n'+dob+'\n'+height+'\n'+weight+'\n'+eyeColor+'\n'+occupation);
 }
 
+function displayFamily(person, people){
+  let parentsFound = findParents(person, people);
+  let parent1 = "First parent: " + parentsFound[0].firstName + " " + parentsFound[0].lastName;
+  let parent2 =  "Second parent: " + parentsFound[1].firstName + " " + parentsFound[1].lastName;
+  let spouseFound = findSpouse(person, people);
+  let currentSpouse = "Current Spouse: " + spouseFound[0].firstName + " " + spouseFound[0].lastName;
+  alert(parent1+'\n'+parent2+'\n'+currentSpouse+'\n');
+}
+
+
+function findSpouse(person, people) {
+  var person = person;
+  let foundSpouse = people.filter(function(element){
+    if(element.id === person[0].currentSpouse) {
+      return true;
+    } else {
+      return false;
+    }
+  })
+return foundSpouse
+}
+function findParents(person, people) {
+  var person = person;
+  let foundParents = people.filter(function(element){
+    if(element.id === person[0].parents[0] || element.id === person[0].parents[1]) {
+      return true;
+    } else {
+      return false;
+    }
+  })
+return foundParents
+}
+
+function displayDescendants(person){
+  let parent1 = "First parent: " + person[0].parents[0] ; 
+  let parent2 =  "Second parent: " + person[0].parents[1];
+  let currentSpouse = "Current Spouse: " + person[0].currentSpouse;
+  alert(parent1+'\n'+parent2+'\n'+currentSpouse+'\n');
+}
 //#endregion
 
 
