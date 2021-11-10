@@ -13,6 +13,7 @@ function app(people){
   switch(searchType){
     case 'yes':
       searchResults = searchByName(people);
+      displayPerson(searchResults)
       break;
     case 'no':
       // TODO: search by traits
@@ -59,7 +60,31 @@ function mainMenu(person, people){
   }
 }
 
-//#endregion
+//TODO: add other trait filter functions here.
+function searchByTrait(people){
+  let userInput = promptFor("Would you like to search by eye color, gender, height or weight ", autoValid).toLowerCase();
+  let resultTrait = "";
+  switch(userInput) {
+    case "eye color":
+      resultTrait = searchByEyeColor(people);
+      displayPeople(resultTrait)
+      break;
+      case "gender":
+      resultTrait = searchByGender(people)
+      displayPeople(resultTrait)
+      break;
+      case "height":
+      resultTrait = searchByHeight(people)
+      displayPeople(resultTrait)
+      break;
+      case "weight":
+      resultTrait = searchByWeight(people)
+      displayPeople(resultTrait)
+      break;
+      default:
+      searchByTrait(people); // ask again
+    }
+}
 
 //Filter functions.
 //Ideally you will have a function for each trait.
@@ -83,37 +108,70 @@ function searchByName(people){
   return foundPerson;
 }
 
+
 //unfinished function to search through an array of people to find matching eye colors. Use searchByName as reference.
 function searchByEyeColor(people){
+    let eyeColor = promptFor("What is the person's eye color?", autoValid).toLowerCase();
 
-}
-
-//TODO: add other trait filter functions here.
-function searchByTrait(people){
-  let userInput = promptFor("Would you like to search by eye color, gender, height or weight ", autoValid).toLowerCase();
-  switch(userInput) {
-    case "eye color":
-      // TODO: get person's eye color
-      console.log(`${userInput}`)
-      break;
-      case "gender":
-      // TODO: get person's gender
-      console.log(`${userInput}`)
-      break;
-      case "height":
-      // TODO: get person's height
-      console.log(`${userInput}`)
-      break;
-      case "weight":
-      // TODO: get person's weight
-      console.log(`${userInput}`)
-      break;
-      default:
-      searchByTrait(people); // ask again
+    let foundPerson = people.filter(function(potentialMatch){
+      if(potentialMatch.eyeColor === eyeColor){
+        return true;
+      }
+      else{
+        return false;
     }
+  })
+  // TODO: find the person single person object using the name they entered.
+  return foundPerson;
 }
 
+function searchByHeight(people){
+    let height = promptFor("What is the person's height?", autoValid);
 
+    let foundPerson = people.filter(function(potentialMatch){
+      if(potentialMatch.height == height){
+        return true;
+      }
+      else{
+        return false;
+    }
+  })
+  // TODO: find the person single person object using the name they entered.
+  return foundPerson;
+}
+
+function searchByWeight(people){
+    let weight = promptFor("What is the person's weight?", autoValid);
+
+    let foundPerson = people.filter(function(potentialMatch){
+      //if(weight < people.weight - 5 && weight > people.weight + 5){  
+      if(potentialMatch.weight == weight){
+        return true;
+      }
+      
+else{
+        return false;
+      }
+    }
+  )
+  // TODO: find the person single person object using the name they entered.
+  return foundPerson;
+}
+
+function searchByGender(people){
+    let gender = promptFor("What is the person's gender?", autoValid).toLowerCase();
+
+    let foundPerson = people.filter(function(potentialMatch){
+      if(potentialMatch.eyeColor === gender){
+        return true;
+      }
+      else{
+        return false;
+    }
+  })
+  // TODO: find the person single person object using the name they entered.
+  return foundPerson;
+}
 
 //#endregion
 
