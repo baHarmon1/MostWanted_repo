@@ -222,7 +222,7 @@ function displayPeople(people){
 }
 
 function displayPerson(person){
-  let personInfo = "First Name: " + person.firstName + "\n";
+  let personInfo = "First Name: " + person["firstName"] + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
   personInfo += "Eye color: " + person.eyeColor + "\n";
   personInfo += "Height: " + person.height + "\n";
