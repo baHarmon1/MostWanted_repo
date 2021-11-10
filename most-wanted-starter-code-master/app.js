@@ -37,7 +37,7 @@ function mainMenu(person, people){
     return app(people); // restart
   }
 
-  let displayOption = promptFor("Found " + JSON.stringify(person.firstName) + " " + JSON.stringify(person.lastName) + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'", autoValid);
+  let displayOption = promptFor("Found " + person[0].firstName + " " + person[0].lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'", autoValid);
 
   switch(displayOption){
     case "info":
@@ -90,23 +90,9 @@ function searchByTrait(people){
 
 function onePerson(searchResults, people) {
   if (searchResults.length == 1) {
-    alert(`This is the result of your query: `)
-    alert(displayPerson(searchResults));
-    let userInputMoreDetails = promptFor(`Would you like to see family details on ${searchResults.firstName}`, yesNo).toLowerCase();
-    switch(userInputMoreDetails){
-      case 'yes':
-        mainMenu(searchResults, people)
-        break;
-      case 'no':
-        alert("Ok, restarting the app")
-        app(people); // restart app
-        break;
-      default:
-        alert("Invalid input")
-        onePerson(searchResults)
-    }
+        mainMenu(searchResults, people)   
   } else { 
-      alert("Your search includes multiple people,redirecting to filter by traits");
+      alert("Your search includes multiple people, redirecting to filter by traits");
       searchByTrait(searchResults)
     }
   }
@@ -222,15 +208,15 @@ function displayPeople(people){
 }
 
 function displayPerson(person){
-  let personInfo = "First Name: " + person.firstName + "\n";
-  personInfo += "Last Name: " + person.lastName + "\n";
-  personInfo += "Eye color: " + person.eyeColor + "\n";
-  personInfo += "Height: " + person.height + "\n";
-  personInfo += "Gender: " + person.gender + "\n";
-  personInfo += "Weight: " + person.weight + "\n";
-  personInfo += "Occupation: " + person.occupation + "\n";
-  personInfo += "Date Of Birth: " + person.dob + "\n";
-  alert(JSON.stringify(personInfo));
+  let firstName = "First Name: " + person[0].firstName; 
+  let lastName =  "Last Name: " + person[0].lastName;
+  let gender = "Gender: " + person[0].gender;
+  let dob = "Date Of Birth: " + person[0].dob;
+  let height = "Height: " + person[0].height;
+  let weight = "Weight: " + person[0].weight;
+  let eyeColor = "Eye color: " + person[0].eyeColor;
+  let occupation = "Occupation: " + person[0].occupation;
+  alert(firstName+'\n'+lastName+'\n'+gender+'\n'+dob+'\n'+height+'\n'+weight+'\n'+eyeColor+'\n'+occupation);
 }
 
 //#endregion
