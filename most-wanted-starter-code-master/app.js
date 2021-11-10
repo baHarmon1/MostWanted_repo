@@ -81,6 +81,10 @@ function searchByTrait(people){
       resultTrait = searchByWeight(people)
       displayPeople(resultTrait)
       break;
+      case "occupation":
+      resultTrait = searchByOccupation(people)
+      displayPeople(resultTrait)
+      break;
       default:
       searchByTrait(people); // ask again
     }
@@ -167,6 +171,21 @@ function searchByGender(people){
       }
       else{
         return false;
+    }
+  })
+  // TODO: find the person single person object using the name they entered.
+  return foundPerson;
+}
+
+function searchByOccupation(people){
+  let occupation = promptFor("What is the person's occupation?", autoValid).toLowerCase();
+
+  let foundPerson = people.filter(function(potentialMatch){
+    if(potentialMatch.occupation === occupation){
+      return true;
+    }
+    else{
+      return false;
     }
   })
   // TODO: find the person single person object using the name they entered.
