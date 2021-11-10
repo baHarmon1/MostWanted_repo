@@ -62,23 +62,18 @@ function searchByTrait(people){
   switch(userInput) {
     case "eye color":
       resultTrait = searchByEyeColor(people);
-      displayPeople(resultTrait)
       onePerson(resultTrait, people)
       case "gender":
       resultTrait = searchByGender(people)
-      displayPeople(resultTrait)
       onePerson(resultTrait, people)
       case "height":
       resultTrait = searchByHeight(people)
-      displayPeople(resultTrait)
       onePerson(resultTrait, people)
       case "weight":
       resultTrait = searchByWeight(people)
-      displayPeople(resultTrait)
       onePerson(resultTrait, people)
       case "occupation":
       resultTrait = searchByOccupation(people)
-      displayPeople(resultTrait)
       onePerson(resultTrait, people)
       default:
       searchByTrait(people); // ask again
