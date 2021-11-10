@@ -16,7 +16,6 @@ function app(people){
       displayPerson(searchResults)
       break;
     case 'no':
-      // TODO: search by traits
       searchResults = searchByTrait(people);
       break;
       default: 
@@ -38,7 +37,7 @@ function mainMenu(person, people){
     return app(people); // restart
   }
 
-  let displayOption = promptFor("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'", autoValid);
+  let displayOption = promptFor("Found " + JSON.stringify(person.firstName) + " " + JSON.stringify(person.lastName) + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'", autoValid);
 
   switch(displayOption){
     case "info":
@@ -60,36 +59,57 @@ function mainMenu(person, people){
   }
 }
 
-//TODO: add other trait filter functions here.
 function searchByTrait(people){
-  let userInput = promptFor("Would you like to search by eye color, gender, height or weight ", autoValid).toLowerCase();
+  let userInput = promptFor("Would you like to search by eye color, gender, height, weight or occupation?", autoValid).toLowerCase();
   let resultTrait = "";
   switch(userInput) {
     case "eye color":
       resultTrait = searchByEyeColor(people);
       displayPeople(resultTrait)
-      break;
+      onePerson(resultTrait, people)
       case "gender":
       resultTrait = searchByGender(people)
       displayPeople(resultTrait)
-      break;
+      onePerson(resultTrait, people)
       case "height":
       resultTrait = searchByHeight(people)
       displayPeople(resultTrait)
-      break;
+      onePerson(resultTrait, people)
       case "weight":
       resultTrait = searchByWeight(people)
       displayPeople(resultTrait)
-      break;
+      onePerson(resultTrait, people)
       case "occupation":
       resultTrait = searchByOccupation(people)
       displayPeople(resultTrait)
-      break;
+      onePerson(resultTrait, people)
       default:
       searchByTrait(people); // ask again
     }
 }
 
+function onePerson(searchResults, people) {
+  if (searchResults.length == 1) {
+    alert(`This is the result of your query: `)
+    alert(displayPerson(searchResults));
+    let userInputMoreDetails = promptFor(`Would you like to see family details on ${searchResults.firstName}`, yesNo).toLowerCase();
+    switch(userInputMoreDetails){
+      case 'yes':
+        mainMenu(searchResults, people)
+        break;
+      case 'no':
+        alert("Ok, restarting the app")
+        app(people); // restart app
+        break;
+      default:
+        alert("Invalid input")
+        onePerson(searchResults)
+    }
+  } else { 
+      alert("Your search includes multiple people,redirecting to filter by traits");
+      searchByTrait(searchResults)
+    }
+  }
 //Filter functions.
 //Ideally you will have a function for each trait.
 /////////////////////////////////////////////////////////////////
@@ -125,7 +145,6 @@ function searchByEyeColor(people){
         return false;
     }
   })
-  // TODO: find the person single person object using the name they entered.
   return foundPerson;
 }
 
@@ -140,7 +159,6 @@ function searchByHeight(people){
         return false;
     }
   })
-  // TODO: find the person single person object using the name they entered.
   return foundPerson;
 }
 
@@ -158,7 +176,6 @@ else{
       }
     }
   )
-  // TODO: find the person single person object using the name they entered.
   return foundPerson;
 }
 
@@ -166,14 +183,13 @@ function searchByGender(people){
     let gender = promptFor("What is the person's gender?", autoValid).toLowerCase();
 
     let foundPerson = people.filter(function(potentialMatch){
-      if(potentialMatch.eyeColor === gender){
+      if(potentialMatch.gender === gender){
         return true;
       }
       else{
         return false;
     }
   })
-  // TODO: find the person single person object using the name they entered.
   return foundPerson;
 }
 
@@ -188,7 +204,6 @@ function searchByOccupation(people){
       return false;
     }
   })
-  // TODO: find the person single person object using the name they entered.
   return foundPerson;
 }
 
@@ -207,12 +222,15 @@ function displayPeople(people){
 }
 
 function displayPerson(person){
-  // print all of the information about a person:
-  // height, weight, age, name, occupation, eye color.
   let personInfo = "First Name: " + person.firstName + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
-  // TODO: finish getting the rest of the information to display.
-  alert(personInfo);
+  personInfo += "Eye color: " + person.eyeColor + "\n";
+  personInfo += "Height: " + person.height + "\n";
+  personInfo += "Gender: " + person.gender + "\n";
+  personInfo += "Weight: " + person.weight + "\n";
+  personInfo += "Occupation: " + person.occupation + "\n";
+  personInfo += "Date Of Birth: " + person.dob + "\n";
+  alert(JSON.stringify(personInfo));
 }
 
 //#endregion
