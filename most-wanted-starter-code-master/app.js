@@ -23,6 +23,7 @@ function app(people){
     app(people); // restart app
       break;
   }
+  mainMenu(searchResults, people)
 }
 
 // Menu function to call once you find who you are looking for
@@ -45,7 +46,7 @@ function mainMenu(person, people){
       displayFamily(person, people)
     break;
     case "descendants":
-      displayDescendants(person)
+      displayDescendants(person, people)
     break;
     case "restart":
     app(people); // restart
@@ -101,11 +102,11 @@ function onePerson(searchResults, people) {
 
 //nearly finished function used to search through an array of people to find matching first and last name and return a SINGLE person object.
 function searchByName(people){
-  let firstName = promptFor("What is the person's first name?", autoValid);
-  let lastName = promptFor("What is the person's last name?", autoValid);
+  let firstName = promptFor("What is the person's first name?", autoValid).toLowerCase();
+  let lastName = promptFor("What is the person's last name?", autoValid).toLowerCase();
 
   let foundPerson = people.filter(function(potentialMatch){
-    if(potentialMatch.firstName === firstName && potentialMatch.lastName === lastName){
+    if(potentialMatch.firstName.toLowerCase() === firstName && potentialMatch.lastName.toLowerCase() === lastName){
       return true;
     }
     else{
@@ -226,6 +227,12 @@ function displayFamily(person, people){
   alert(parent1+'\n'+parent2+'\n'+currentSpouse+'\n');
 }
 
+function displayDescendants(person, people){
+  let descendantsFound = findDescendants(person, people);
+  let child1 = "First child: " + descendantsFound[0].firstName + " " + descendantsFound[0].lastName;
+  let child2 =  "Second child: " + descendantsFound[1].firstName + " " + descendantsFound[1].lastName;
+  alert(child1+'\n'+child2+'\n');
+}
 
 function findSpouse(person, people) {
   var person = person;
@@ -250,15 +257,29 @@ function findParents(person, people) {
 return foundParents
 }
 
-function displayDescendants(person){
-  let parent1 = "First parent: " + person[0].parents[0] ; 
-  let parent2 =  "Second parent: " + person[0].parents[1];
-  let currentSpouse = "Current Spouse: " + person[0].currentSpouse;
-  alert(parent1+'\n'+parent2+'\n'+currentSpouse+'\n');
+
+function findDescendants(person, people){
+  var personID = person.id;
+  var foundChildren = [];
+  if(personID = people.filter(person)){
+    if(person.parents.includes(personID)){
+      foundChildren.push(person)
+      return true;
+    } else {
+      return true;
+    }
+  } else {
+    return false;
+  }
+  for(let i = foundChildren.length - 1; i >= 0; i--){
+    displayDescendants(foundChildren[i], people);
+  }
 }
+
 //#endregion
 
-
+parents = people.find('id','parents')
+parents.find()
 
 //Validation functions.
 //Functions to validate user input.
