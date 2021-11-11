@@ -229,9 +229,16 @@ function displayFamily(person, people){
 
 function displayDescendants(person, people){
   let descendantsFound = findDescendants(person, people);
-  let child1 = "First child: " + descendantsFound[0].firstName + " " + descendantsFound[0].lastName;
-  let child2 =  "Second child: " + descendantsFound[1].firstName + " " + descendantsFound[1].lastName;
-  alert(child1+'\n'+child2+'\n');
+  if (descendantsFound.length == 0) {
+    alert("This person has no descendants")
+  } else if (descendantsFound.length == 1){
+    let child1 = "Only child: " + descendantsFound[0].firstName + " " + descendantsFound[0].lastName;
+    alert(child1)
+  } else {
+    let child1 = "First child: " + descendantsFound[0].firstName + " " + descendantsFound[0].lastName;
+    let child2 =  "Second child: " + descendantsFound[1].firstName + " " + descendantsFound[1].lastName;
+    alert(child1+'\n'+child2+'\n');
+  }
 }
 
 function findSpouse(person, people) {
@@ -257,29 +264,19 @@ function findParents(person, people) {
 return foundParents
 }
 
-
 function findDescendants(person, people){
-  var personID = person.id;
-  var foundChildren = [];
-  if(personID = people.filter(person)){
-    if(person.parents.includes(personID)){
-      foundChildren.push(person)
+  var person = person;
+  let foundDescendants = people.filter(function(element){
+    if(person[0].id === element.parents[0] || person[0].id === element.parents[1]) {
       return true;
     } else {
-      return true;
+      return false;
     }
-  } else {
-    return false;
-  }
-  for(let i = foundChildren.length - 1; i >= 0; i--){
-    displayDescendants(foundChildren[i], people);
-  }
+  })
+return foundDescendants
 }
 
 //#endregion
-
-parents = people.find('id','parents')
-parents.find()
 
 //Validation functions.
 //Functions to validate user input.
